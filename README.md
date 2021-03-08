@@ -1,6 +1,6 @@
 # MetaCall Scala Port
 
-A library for calling NodeJS, Python, and Ruby functions from Scala.
+A library for calling NodeJS, Python, C#, and Ruby functions from Scala.
 
 ```js
 // myfunctions.js
@@ -37,6 +37,26 @@ object Main extends App {
 
 ## Usage
 
+First, make sure to install MetaCall from source. You will need the path to the build (`LOADER_LIBRARY_PATH`) directory in order to use the port.
+
+For an example SBT project that uses this library, see the `example` directory.
+
+To add the MetaCall Scala port to your SBT project, add the following to your `project/plugins.sbt` file:
+```scala
+// To pull the library from GitHub Packages
+addSbtPlugin("com.codecommit" % "sbt-github-packages" % "0.5.2")
+```
+
+Then add the following to your `build.sbt`:
+```scala
+resolvers += Resolver.githubPackages("metacall")
+libraryDependencies += "io.metacall" %% "metacall" % "0.1.0"
+```
+
+**Note** that you must set the `githubOwner` and `githubRepository` keys in order to pull the library. See [here](#setup) for details.
+
+Also note that the environment variable `LOADER_LIBRARY_PATH` must be set, so use `LOADER_LIBRARY_PATH=<path_to_metacall_build> sbt run` to run your project.
+
 To import most of MetaCall's functionality, use:
 ```scala
 import metacall._, instances._
@@ -45,7 +65,7 @@ This imports the important types and type class instances. There are a few impor
 - `Value`: A coproduct representing the types of values that can be passed as arguments to and returned from foreign functions.
 - `Args[A]`: A type class that allows product types (e.g. `case class`es, tuples, `shapeless.HList`s) to be passed as arguments to foreign functions. Instances for this type class are defined in `metacall.instances`.
 
-The `Caller` object defines methods for calling the foreigh functions, such as `call`, and `callV`. **Before doing anything, remember that you need to call `Caller.start()`; you should also call `Caller.destroy()` when you're done using the `Caller`. This should be done only once during the life of the application.**
+The `Caller` object defines methods for calling the foreign functions, such as `call`, and `callV`. **Before doing anything, remember that you need to call `Caller.start()`; you should also call `Caller.destroy()` when you're done using the `Caller`. This should be done only once during the life of the application.**
 ```scala
 Caller.start(concurrent.ExecutionContext.global)
 // scala.util.Try[Unit]
