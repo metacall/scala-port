@@ -90,3 +90,5 @@ lazy val root = (project in file("."))
     imageNames in docker := Seq(ImageName("metacall-scala-tests"))
   )
   .enablePlugins(DockerPlugin)
+
+lazy val example = project in file("example")
