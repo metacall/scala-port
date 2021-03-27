@@ -1,30 +1,21 @@
+ThisBuild / scalaVersion := "2.13.4"
+ThisBuild / organization := "io.metacall"
+ThisBuild / organizationName := "MetaCall"
+
 import Tests._
 
-lazy val commonSettings = Seq(
-  name := "metacall-scala",
-  scalaVersion := "2.13.4",
-  version := "0.1.0",
-  organization := "io.metacall",
-  organizationName := "MetaCall",
-  scalacOptions ++= Seq(
-    // Only for debugging purposes
-    // "-Djava.compiler=NONE",
-    "-feature",
-    "-deprecation",
-    "-Wunused:imports,patvars,privates,locals,explicits,implicits,params",
-    "-Xlint",
-    "-explaintypes",
-    "-Wdead-code",
-    "-Wextra-implicit",
-    "-Wnumeric-widen",
-    "-Wconf:cat=lint-byname-implicit:silent"
-  ),
-  scalacOptions in (Compile, console) := Seq.empty,
-  libraryDependencies ++= Seq(
-    "net.java.dev.jna" % "jna" % "5.6.0",
-    "com.chuusai" %% "shapeless" % "2.3.3",
-    "org.scalatest" %% "scalatest" % "3.2.2" % Test
-  )
+val commonScalacOptions = Seq(
+  // Only for debugging purposes
+  // "-Djava.compiler=NONE",
+  "-feature",
+  "-deprecation",
+  "-Wunused:imports,patvars,privates,locals,explicits,implicits,params",
+  "-Xlint",
+  "-explaintypes",
+  "-Wdead-code",
+  "-Wextra-implicit",
+  "-Wnumeric-widen",
+  "-Wconf:cat=lint-byname-implicit:silent"
 )
 
 lazy val dockerTest = taskKey[Unit]("Run tests in metacall/core:dev")
@@ -51,19 +42,20 @@ dockerTest := {
 }
 
 lazy val root = (project in file("."))
-  .settings(commonSettings: _*)
   .settings(
-    name := "metacall",
+    name := "metacall-scala",
+    version := "0.1.0",
     fork in Test := true,
     testGrouping in Test := (testGrouping in Test).value.flatMap { group =>
       group.tests map (test => Group(test.name, Seq(test), SubProcess(ForkOptions())))
     },
-    githubSuppressPublicationWarning := true,
-    githubOwner := "metacall",
-    githubRepository := "core",
-    githubTokenSource :=
-      TokenSource.Environment("GITHUB_TOKEN") ||
-        TokenSource.GitConfig("github.token"),
+    scalacOptions ++= commonScalacOptions,
+    scalacOptions in (Compile, console) := Seq.empty,
+    libraryDependencies ++= Seq(
+      "net.java.dev.jna" % "jna" % "5.6.0",
+      "com.chuusai" %% "shapeless" % "2.3.3",
+      "org.scalatest" %% "scalatest" % "3.2.2" % Test
+    ),
     dockerfile in docker := new Dockerfile {
       from("metacall/core:dev")
 
@@ -90,5 +82,3 @@ lazy val root = (project in file("."))
     imageNames in docker := Seq(ImageName("metacall-scala-tests"))
   )
   .enablePlugins(DockerPlugin)
-
-lazy val example = project in file("example")
