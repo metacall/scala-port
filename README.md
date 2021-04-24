@@ -160,3 +160,7 @@ valgrind --tool=memcheck --trace-children=yes --error-limit=no scala -Djava.comp
 # Publishing
 
 Use `sbt publish` to publish to GitHub Packages using [sbt-github-packages](https://github.com/djspiewak/sbt-github-packages). Make sure your GitHub token is set correctly according to [Setup](#setup).
+
+# TODOs
+
+- [ ] Add a binding for `metacall_clear`
