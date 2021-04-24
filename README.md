@@ -163,4 +163,4 @@ Use `sbt publish` to publish to GitHub Packages using [sbt-github-packages](http
 
 # TODOs
 
-- [ ] Add a binding for `metacall_clear`
+- [ ] Add a binding for [`metacall_clear`](https://github.com/metacall/core/blob/develop/source/metacall/include/metacall/metacall.h#L1195)
