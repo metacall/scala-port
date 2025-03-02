@@ -133,6 +133,8 @@ sudo make install
 
 > You need to set `LOADER_LIBRARY_PATH` to the build directory created in the script above before running `sbt`, i.e. `LOADER_LIBRARY_PATH=path/to/core/build sbt`
 
+You can also set environment variables by running `main.js` file in MetaCall REPL and then copy-pasting the generated export statements into your terminal
+
 To run the tests in Docker, run `sbt` then `docker` to build the image (must run `docker` from within the SBT session), and then `sbt dockerTest` to run it. Note that you should build the `metacall/core:dev` image locally since the published one might not be up to date by running `./docker-compose.sh build` in `metacall/core`'s root. Pay attention to SBT's error messages.
 
 ### Debugging
