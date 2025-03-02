@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.4"
+ThisBuild / scalaVersion := "2.13.12"
 ThisBuild / organization := "io.metacall"
 ThisBuild / organizationName := "MetaCall"
 
@@ -52,7 +52,7 @@ lazy val root = (project in file("."))
     scalacOptions ++= commonScalacOptions,
     scalacOptions in (Compile, console) := Seq.empty,
     libraryDependencies ++= Seq(
-      "net.java.dev.jna" % "jna" % "5.6.0",
+      "net.java.dev.jna" % "jna" % "5.13.0",
       "com.chuusai" %% "shapeless" % "2.3.3",
       "org.scalatest" %% "scalatest" % "3.2.2" % Test
     ),
