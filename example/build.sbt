@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.4"
+ThisBuild / scalaVersion := "2.13.12"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.example"
 ThisBuild / organizationName := "example"
@@ -14,6 +14,7 @@ lazy val root = (project in file("."))
     resolvers += Resolver.githubPackages("metacall"),
     libraryDependencies ++= Seq(
       "io.metacall" %% "metacall" % "0.1.0",
-      "org.scalatest" %% "scalatest" % "3.2.2" % Test
+      "org.scalatest" %% "scalatest" % "3.2.2" % Test,
+      "net.java.dev.jna" % "jna" % "5.13.0"
     )
   )
